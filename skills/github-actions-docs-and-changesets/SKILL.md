@@ -1,9 +1,15 @@
 ---
-name: npm-publish-changesets
-description: Set up or audit a TypeScript npm package's CI/release pipeline the way the user likes it - Changesets for versioning and publishing to npm via GitHub Actions (OIDC trusted publishing), and VitePress docs deployed to GitHub Pages. Use when the user asks to add CI, releases, publishing, changesets, or a docs site to an npm package, or to "set up the pipelines like compose-md".
+name: github-actions-docs-and-changesets
+description: Set up or audit a TypeScript npm package's CI/release pipeline with Changesets for versioning and publishing to npm via GitHub Actions (OIDC trusted publishing), and VitePress docs deployed to GitHub Pages.
 ---
 
 # npm publishing with Changesets + VitePress docs
+
+This skill assumes the following tech stack:
+
+- Github actions as CI platform
+- NPM for publishing (though alternative package repositories can easily be accomodated)
+- Vitepress for documentation. 
 
 Templates for every file are in
 [templates/](templates/). Copy them, then adapt the scripts and package names.
