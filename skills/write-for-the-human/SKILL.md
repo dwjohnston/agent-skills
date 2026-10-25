@@ -42,7 +42,34 @@ Fails on any linted file that matches no entry's `allowedFiles`.
 
 **Why:** Specifics invite the reader to check them, and make the sentence go stale when they change.
 
-### Put descriptions on their own line
+### Use lists
+
+#### Use numbered lists
+
+If the context is you are likely receiving feedback/input from the user, use numbered lists.
+
+This will allow the user to reference bullet points with numbers.
+
+e.g.
+
+````md
+1. Untrack `meta-repo.local.yaml`
+   - Remove it from git and add it to the ignore list.
+   - e.g.
+     ```sh
+     git rm --cached meta-repo.local.yaml
+     ```
+2. Purge it from history
+   - Rewrites every commit, so it needs a fresh clone.
+3. Rotate the secrets it contained
+   - Safe to do last, once the file is gone from the tip.
+````
+
+The reply is then "2 and 3, skip 1", rather than a paragraph describing which parts to do.
+
+Three levels is the practical depth: the numbered item, its description, and the example under the description. Deeper than that and the reader loses the thread.
+
+#### Put descriptions on their own line
 
 ✅ **Do** put the path or name on one bullet and its description on a nested bullet beneath it.
 
