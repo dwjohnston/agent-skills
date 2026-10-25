@@ -69,6 +69,15 @@ The reply is then "2 and 3, skip 1", rather than a paragraph describing which pa
 
 Three levels is the practical depth: the numbered item, its description, and the example under the description. Deeper than that and the reader loses the thread.
 
+When an item has several points to make, they all sit at the second level and keep the same shape — e.g.
+
+````md
+2. Purge it from history
+   - Rewrites every commit, so everyone needs a fresh clone.
+   - Breaks any pull request that is already open.
+   - Has to be redone if the file comes back later.
+````
+
 #### Put descriptions on their own line
 
 ✅ **Do** put the path or name on one bullet and its description on a nested bullet beneath it.
