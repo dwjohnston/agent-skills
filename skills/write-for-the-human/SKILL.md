@@ -67,16 +67,17 @@ e.g.
 
 The reply is then "2 and 3, skip 1", rather than a paragraph describing which parts to do.
 
-Three levels is the practical depth: the numbered item, its description, and the example under the description. Deeper than that and the reader loses the thread.
-
-When an item has several points to make, they all sit at the second level and keep the same shape — e.g.
+If there are multiple sub points: 
 
 ````md
 2. Purge it from history
-   - Rewrites every commit, so everyone needs a fresh clone.
-   - Breaks any pull request that is already open.
-   - Has to be redone if the file comes back later.
+   1. Rewrites every commit, so everyone needs a fresh clone.
+   2. Breaks any pull request that is already open.
+   3. Has to be redone if the file comes back later.
 ````
+
+Then the use can refer to `2.1` eg. 'Reword 2.1 - ....'.
+
 
 #### Put descriptions on their own line
 
