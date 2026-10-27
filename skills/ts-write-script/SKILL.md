@@ -4,9 +4,9 @@ description: By default - use TypeScript to write scripts.
 ---
 
 
-## 1. Include a `usage` function at the top of the file
+## 1. Include a `help` function at the top of the file
 
-Write usage as a function that logs a string, placed above the logic. It does two jobs: it documents the script for whoever reads the file, and it is what the script prints for `--help` or when arguments are wrong.
+Write help as a function that logs a string, placed above the logic. It does two jobs: it documents the script for whoever reads the file, and it is what the script prints for `--help` or when arguments are wrong. Start the text with a short description of what the script does, then the usage, arguments, options and an example.
 
 Example: a script that counts the lines in a file. It uses Node's built-in `parseArgs`, so there is no dependency.
 
@@ -14,8 +14,11 @@ Example: a script that counts the lines in a file. It uses Node's built-in `pars
 import { readFileSync } from "node:fs";
 import { parseArgs } from "node:util";
 
-function usage() {
+function help() {
   console.log(`
+Count the lines in a text file and print the total to stdout.
+Blank lines are included unless --skip-blank is passed.
+
 Usage:
   bun count-lines.ts <file> [--skip-blank]
 
@@ -46,14 +49,14 @@ if (import.meta.main) {
   });
 
   if (values.help) {
-    usage();
+    help();
     process.exit(0);
   }
 
   const [file] = positionals;
   if (!file) {
     console.error("Missing <file> argument.");
-    usage();
+    help();
     process.exit(1);
   }
 
@@ -61,7 +64,7 @@ if (import.meta.main) {
 }
 ```
 
-If you use `commander` instead, its `Command` parses `process.argv` and generates `--help` itself, so the hand-written `usage` is not needed.
+If you use `commander` instead, its `Command` parses `process.argv` and generates `--help` itself, so the hand-written `help` is not needed.
 
 
 ## 2. Do not reference files relative to the current working directory. 
