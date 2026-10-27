@@ -24,9 +24,6 @@ At the top of the file, below the imports, add a function that serves to describ
 This does two jobs: it documents the script for whoever reads the file, and it is what the script prints for `--help` or when arguments are wrong. 
 
 ```ts
-#!/usr/bin/env bun
-// AI-generated: written by Copilot, reviewed by a human? (edit to match your convention)
-import { readFileSync } from "node:fs";
 import { parseArgs } from "node:util";
 
 function help() {
@@ -49,6 +46,7 @@ Example:
 `);
 }
 
+
 if (import.meta.main) {
   const { values, positionals } = parseArgs({
     allowPositionals: true,
@@ -59,30 +57,16 @@ if (import.meta.main) {
   });
   const [file] = positionals;
 
-  if (values.help) {
+  if (values.help || !file) {
     help();
-    process.exit(0);
-  }
-  if (!file) {
-    console.error("Missing <file> argument.");
-    help();
-    process.exit(1);
+    process.exit(values.help ? 0 : 1);
   }
 
   main(file, values["skip-blank"]);
 }
-
-export function main(file: string, skipBlank = false) {
-  console.log(countLines(readFileSync(file, "utf8"), skipBlank));
-}
-
-export function countLines(text: string, skipBlank = false): number {
-  const lines = text.split("\n");
-  return skipBlank ? lines.filter((l) => l.trim() !== "").length : lines.length;
-}
 ```
 
-The main guard only parses and validates arguments, then calls `main`. `help()` runs for `--help` (exit 0) or bad usage (exit 1). Function declarations are hoisted, so `main` can sit below the guard.
+The main guard only parses and validates arguments, then calls `main`. `main` and the functions it uses come below the guard (not shown here).
 
 If you use `commander` instead, its `Command` parses `process.argv` and generates `--help` itself, so the hand-written `help` is not needed.
 
