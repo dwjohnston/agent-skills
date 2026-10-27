@@ -46,29 +46,28 @@ Example:
 `);
 }
 
+```
+
+### Alternative: `commander`
+
+With `commander`, the `Command` block replaces both `help` and the argument parsing. Its description, arguments and options become the `--help` output, and it rejects bad usage for you.
+
+```ts
+import { Command } from "commander";
 
 if (import.meta.main) {
-  const { values, positionals } = parseArgs({
-    allowPositionals: true,
-    options: {
-      "skip-blank": { type: "boolean", default: false },
-      help: { type: "boolean", short: "h", default: false },
-    },
-  });
-  const [file] = positionals;
-
-  if (values.help || !file) {
-    help();
-    process.exit(values.help ? 0 : 1);
-  }
-
-  main(file, values["skip-blank"]);
+  new Command()
+    .description("Count the lines in a text file and print the total to stdout.")
+    .argument("<file>", "path to a text file (relative to the current directory)")
+    .option("--skip-blank", "do not count empty lines")
+    .addHelpText("after", "\nExample:\n  bun count-lines.ts notes.md --skip-blank")
+    .action((file: string, opts: { skipBlank?: boolean }) => main(file, opts.skipBlank))
+    .parse();
 }
 ```
 
-The main guard only parses and validates arguments, then calls `main`. `main` and the functions it uses come below the guard (not shown here).
 
-If you use `commander` instead, its `Command` parses `process.argv` and generates `--help` itself, so the hand-written `help` is not needed.
+
 
 
 ## 2. Do not reference files relative to the current working directory. 
