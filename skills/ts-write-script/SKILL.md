@@ -4,13 +4,28 @@ description: By default - use TypeScript to write scripts.
 ---
 
 
-## 1. Include a `help` function at the top of the file
+## Script structure
 
-Write help as a function that logs a string, placed above the logic. It does two jobs: it documents the script for whoever reads the file, and it is what the script prints for `--help` or when arguments are wrong. Start the text with a short description of what the script does, then the usage, arguments, options and an example.
+Scripts should be ordered as following
 
-Example: a script that counts the lines in a file. It uses Node's built-in `parseArgs`, so there is no dependency.
+```
+<shebang>
+<ai content header>
+<imports>
+<help function>
+<main guard>
+<main function>
+<associated functions>
+```
+
+## Include a `help` function at the top of the file
+At the top of the file, below the imports, add a function that serves to describe what the function does, and its usage. 
+
+This does two jobs: it documents the script for whoever reads the file, and it is what the script prints for `--help` or when arguments are wrong. 
 
 ```ts
+#!/usr/bin/env bun
+// AI-generated: written by Copilot, reviewed by a human? (edit to match your convention)
 import { readFileSync } from "node:fs";
 import { parseArgs } from "node:util";
 
@@ -34,11 +49,6 @@ Example:
 `);
 }
 
-export function countLines(text: string, skipBlank = false): number {
-  const lines = text.split("\n");
-  return skipBlank ? lines.filter((l) => l.trim() !== "").length : lines.length;
-}
-
 if (import.meta.main) {
   const { values, positionals } = parseArgs({
     allowPositionals: true,
@@ -47,22 +57,32 @@ if (import.meta.main) {
       help: { type: "boolean", short: "h", default: false },
     },
   });
+  const [file] = positionals;
 
   if (values.help) {
     help();
     process.exit(0);
   }
-
-  const [file] = positionals;
   if (!file) {
     console.error("Missing <file> argument.");
     help();
     process.exit(1);
   }
 
-  console.log(countLines(readFileSync(file, "utf8"), values["skip-blank"]));
+  main(file, values["skip-blank"]);
+}
+
+export function main(file: string, skipBlank = false) {
+  console.log(countLines(readFileSync(file, "utf8"), skipBlank));
+}
+
+export function countLines(text: string, skipBlank = false): number {
+  const lines = text.split("\n");
+  return skipBlank ? lines.filter((l) => l.trim() !== "").length : lines.length;
 }
 ```
+
+The main guard only parses and validates arguments, then calls `main`. `help()` runs for `--help` (exit 0) or bad usage (exit 1). Function declarations are hoisted, so `main` can sit below the guard.
 
 If you use `commander` instead, its `Command` parses `process.argv` and generates `--help` itself, so the hand-written `help` is not needed.
 
