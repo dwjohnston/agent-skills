@@ -204,6 +204,42 @@ The constants can also be interpolated into `help()`, so the documented default 
 
 ## By default, fail loud and early on missing environment variables or arguments 
 
+Only assign defaults if they're sensible. 
+
+It's better to fail the script early that 
 
 
-## By default, fail loud 
+## By default, fail loud
+
+When data is not what the script expects, throw an error. Do not log it and carry on.
+
+**Rationale:** A logged message is easy to miss, and the script exits 0 as if nothing went wrong. The missing item silently drops out of the result.
+
+```ts
+// 👍 Good
+export async function main() {
+  const items = await fetchItems();
+
+  for (const item of items) {
+    if (!item.id) {
+      throw new Error(`Item is missing an id: ${JSON.stringify(item)}`);
+    }
+    await processItem(item.id);
+  }
+}
+```
+
+```ts
+// 👎 Bad
+export async function main() {
+  const items = await fetchItems();
+
+  for (const item of items) {
+    if (!item.id) {
+      console.log("Item is missing an id", item);
+      continue;
+    }
+    await processItem(item.id);
+  }
+}
+```
