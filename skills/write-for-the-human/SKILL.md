@@ -36,7 +36,7 @@ Fails on any linted file that matches no entry's `allowedFiles`.
 ### Don't name detail the reader doesn't need
 
 ✅ **Do** use a general term when the specifics aren't the point.
-
+`
 ❌ **Don't** list every folder, file or value just because you know them.
 
 **Why:** Specifics invite the reader to check them, and make the sentence go stale when they change.
