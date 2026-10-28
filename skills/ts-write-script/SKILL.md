@@ -206,12 +206,33 @@ The constants can also be interpolated into `help()`, so the documented default 
 
 Only assign defaults if they're sensible. 
 
-It's better to fail the script early that 
+Don't invent a default for a value the script can't safely guess, such as a credential, a target environment or a destination path. Check required values at startup, before doing any work.
+
+**Rationale:** A wrong guess can quietly point the script at the wrong place. Failing late leaves the work half done and hides the real cause.
+
+```ts
+// 👍 Good
+if (import.meta.main) {
+  const env = cleanEnv(process.env, { API_URL: str(), API_TOKEN: str() });
+
+  main(env.API_URL, env.API_TOKEN);
+}
+```
+
+```ts
+// 👎 Bad
+if (import.meta.main) {
+  const apiUrl = process.env.API_URL ?? "https://api.example.com";
+  const apiToken = process.env.API_TOKEN ?? "";
+
+  main(apiUrl, apiToken);
+}
+```
+
+A default is fine when it is safe and obvious, such as `DEFAULT_LIMIT` above.
 
 
 ## By default, fail loud
-
-When data is not what the script expects, throw an error. Do not log it and carry on.
 
 **Rationale:** A logged message is easy to miss, and the script exits 0 as if nothing went wrong. The missing item silently drops out of the result.
 
