@@ -88,16 +88,45 @@ Do not reference files relative to the current working directory.
 
 **Rationale:** You can't assume that a script will be being executed from a specific location, like the project root. 
 
-<eg. project structure>
+Example project structure:
 
-<bad example>
+```text
+my-project/
+  data/
+    config.json
+  scripts/
+    build-report.ts
+```
 
-<good example>
+❌ **Don't:** resolve paths against the current working directory. This only works when run from `my-project/`.
 
-### Exception: when referencing a 'path to file' like script parameter - this _should_ be relative to CWD
+```ts
+// scripts/build-report.ts
+import { readFileSync } from "node:fs";
 
+const config = JSON.parse(readFileSync("data/config.json", "utf8"));
+```
 
-<example>
+✅ **Do:** resolve paths against the script's own location.
+
+```ts
+// scripts/build-report.ts
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+const config = JSON.parse(readFileSync(join(import.meta.dirname, "../data/config.json"), "utf8"));
+```
+
+### Exception: a path passed as a script argument is relative to the CWD
+
+A path the user types on the command line follows normal shell expectations, so resolve it against the CWD.
+
+```ts
+// bun scripts/build-report.ts ./out/report.md
+import { resolve } from "node:path";
+
+const outputPath = resolve(process.cwd(), outputArg);
+```
 
 
 ## Make the script a main guard 
