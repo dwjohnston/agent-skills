@@ -143,9 +143,6 @@ The main function itself should be exported
 import { parseArgs } from "node:util";
 import { cleanEnv, str } from "envalid";
 
-export function main(file: string, apiToken: string) {
-  // ...
-}
 
 if (import.meta.main) {
   const env = cleanEnv(process.env, { API_TOKEN: str() });
@@ -160,12 +157,55 @@ if (import.meta.main) {
 
   main(file, env.API_TOKEN);
 }
+
+export function main(file: string, apiToken: string) {
+  // ...
+}
+
 ```
 
 Because `main` is exported and takes plain values, a test can import it and call it directly, without setting environment variables or `process.argv`.
 
 
+## Declare default values as constants
 
-## 4. By default, fail loud and early on missing environment variables or arguments 
+**Rationale:** Defaults can get lost in default assignements
+
+Declare them in the constants section, between `help` and the main guard.
+
+❌ **Don't:** bury defaults inline, where they're easy to miss and can drift apart.
+
+```ts
+export function main(file: string, limit = 100, timeoutMs = 5000) {
+  // ...
+}
+
+if (import.meta.main) {
+  const { values } = parseArgs({ options: { limit: { type: "string" } } });
+  main(file, Number(values.limit ?? 100));
+}
+```
+
+✅ **Do:** name each default once and reference it everywhere.
+
+```ts
+const DEFAULT_LIMIT = 100;
+const DEFAULT_TIMEOUT_MS = 5000;
+
+export function main(file: string, limit = DEFAULT_LIMIT, timeoutMs = DEFAULT_TIMEOUT_MS) {
+  // ...
+}
+
+if (import.meta.main) {
+  const { values } = parseArgs({ options: { limit: { type: "string" } } });
+  main(file, values.limit ? Number(values.limit) : DEFAULT_LIMIT);
+}
+```
+
+The constants can also be interpolated into `help()`, so the documented default always matches the real one.
+
+## By default, fail loud and early on missing environment variables or arguments 
+
+
 
 ## 5. By default, fail loud 
