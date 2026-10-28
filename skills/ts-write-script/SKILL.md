@@ -6,11 +6,13 @@ description: By default - use TypeScript to write scripts.
 
 ## Endorsed tools
 
+It's up to the user whether these tools should be used. 
+
 - .env files 
   - Bun resolves .env files automatically
   - for node use [dotenv](https://www.npmjs.com/package/dotenv)
 - env var validation
-  - [cleanenv](https://www.npmjs.com/package/cleanenv)
+  - [envalid](https://www.npmjs.com/package/envalid)
 - arguments validation
   - [commander](https://www.npmjs.com/package/commander)
 
