@@ -25,8 +25,8 @@ Scripts should be ordered as following
 <shebang>
 <ai content header>
 <imports>
-<help function>
 <constants>
+<help function>
 <main guard>
 <main function>
 <associated functions>
@@ -169,26 +169,12 @@ Because `main` is exported and takes plain values, a test can import it and call
 
 ## Declare default values as constants
 
-**Rationale:** Defaults can get lost in default assignements
+Declare them in the constants section, between the imports and `help`, so `help()` can interpolate them.
 
-Declare them in the constants section, between `help` and the main guard.
-
-❌ **Don't:** bury defaults inline, where they're easy to miss and can drift apart.
+**Rationale:** Defaults can get lost in default assignments
 
 ```ts
-export function main(file: string, limit = 100, timeoutMs = 5000) {
-  // ...
-}
-
-if (import.meta.main) {
-  const { values } = parseArgs({ options: { limit: { type: "string" } } });
-  main(file, Number(values.limit ?? 100));
-}
-```
-
-✅ **Do:** name each default once and reference it everywhere.
-
-```ts
+// 👍 Good
 const DEFAULT_LIMIT = 100;
 const DEFAULT_TIMEOUT_MS = 5000;
 
@@ -202,10 +188,22 @@ if (import.meta.main) {
 }
 ```
 
+```ts
+// 👎 Bad
+export function main(file: string, limit = 100, timeoutMs = 5000) {
+  // ...
+}
+
+if (import.meta.main) {
+  const { values } = parseArgs({ options: { limit: { type: "string" } } });
+  main(file, Number(values.limit ?? 100));
+}
+```
+
 The constants can also be interpolated into `help()`, so the documented default always matches the real one.
 
 ## By default, fail loud and early on missing environment variables or arguments 
 
 
 
-## 5. By default, fail loud 
+## By default, fail loud 
