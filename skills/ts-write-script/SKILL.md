@@ -71,6 +71,7 @@ import { Command } from "commander";
 
 if (import.meta.main) {
   new Command()
+    // 👇
     .description("Count the lines in a text file and print the total to stdout.")
     .argument("<file>", "path to a text file (relative to the current directory)")
     .option("--skip-blank", "do not count empty lines")
@@ -80,6 +81,7 @@ if (import.meta.main) {
 }
 ```
 
+Include a `// 👇` comment. This will help draw the eye of the human to a useful start point.
 
 
 ## Reference files relative to scripts location
