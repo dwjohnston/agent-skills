@@ -206,7 +206,7 @@ The constants can also be interpolated into `help()`, so the documented default 
 
 Only assign defaults if they're sensible. 
 
-Don't invent a default for a value the script can't safely guess, such as a credential, a target environment or a destination path. Check required values at startup, before doing any work.
+Don't invent a default for a value just for the purpose of making the script run. 
 
 **Rationale:** A wrong guess can quietly point the script at the wrong place. Failing late leaves the work half done and hides the real cause.
 
