@@ -98,18 +98,16 @@ my-project/
     build-report.ts
 ```
 
-❌ **Don't:** resolve paths against the current working directory. This only works when run from `my-project/`.
-
 ```ts
+// 👎 Bad
 // scripts/build-report.ts
 import { readFileSync } from "node:fs";
 
 const config = JSON.parse(readFileSync("data/config.json", "utf8"));
 ```
 
-✅ **Do:** resolve paths against the script's own location.
-
 ```ts
+// 👍 Good
 // scripts/build-report.ts
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -129,7 +127,7 @@ const outputPath = resolve(process.cwd(), outputArg);
 ```
 
 
-## Make the script a main guard 
+## Make the script a runnable module / include a main guard
 
 The main guard block should: 
 - Validate environment variables
@@ -137,10 +135,35 @@ The main guard block should:
 - Pass these into the main function
 
 
-
-- export the function itself
+The main function itself should be exported 
 
 **Rationale:** This lends the script functioanlity to be testable
+
+```ts
+import { parseArgs } from "node:util";
+import { cleanEnv, str } from "envalid";
+
+export function main(file: string, apiToken: string) {
+  // ...
+}
+
+if (import.meta.main) {
+  const env = cleanEnv(process.env, { API_TOKEN: str() });
+
+  const { positionals } = parseArgs({ allowPositionals: true });
+  const [file] = positionals;
+  if (!file) {
+    console.error("Missing <file> argument.");
+    help();
+    process.exit(1);
+  }
+
+  main(file, env.API_TOKEN);
+}
+```
+
+Because `main` is exported and takes plain values, a test can import it and call it directly, without setting environment variables or `process.argv`.
+
 
 
 ## 4. By default, fail loud and early on missing environment variables or arguments 
