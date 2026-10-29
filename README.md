@@ -23,3 +23,9 @@ npx skills add dwjohnston/agent-skills@markdown-general
 | [markdown-writing-prompts](skills/markdown-writing-prompts/SKILL.md) | Conventions for human-readable SKILL.md and AGENTS.md files. |
 | [npm-publish-changesets](skills/npm-publish-changesets/SKILL.md) | Changesets + GitHub Actions npm release pipeline with VitePress docs. |
 | [write-for-the-human](skills/write-for-the-human/SKILL.md) | List-led formatting for text humans read: chat output, AGENTS.md, SKILL.md. |
+
+## Tools
+
+| Tool | Purpose |
+|---|---|
+| [skill-observer](skill-observer/README.md) | Copilot hooks that inject the right skills when the agent starts writing, chosen by a background observer model. |

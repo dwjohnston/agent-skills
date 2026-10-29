@@ -10,5 +10,8 @@
     "commander": "^15.0.0",
     "envalid": "^9.0.0",
     "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@typesafe-ai/sdk": "0.7.0"
   }
 }
