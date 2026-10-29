@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "hooks": {
+    "userPromptSubmitted": [
+      {
+        "type": "command",
+        "bash": "bun skill-observer/hook.ts user-prompt-submitted || true",
+        "cwd": ".",
+        "timeoutSec": 10
+      }
+    ],
+    "preToolUse": [
+      {
+        "type": "command",
+        "matcher": "create|edit|apply_patch|str_replace_editor",
+        "bash": "bun skill-observer/hook.ts pre-tool-use || true",
+        "cwd": ".",
+        "timeoutSec": 10
+      }
+    ],
+    "preCompact": [
+      {
+        "type": "command",
+        "bash": "bun skill-observer/hook.ts pre-compact || true",
+        "cwd": ".",
+        "timeoutSec": 10
+      }
+    ]
+  }
+}
