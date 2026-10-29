@@ -11,6 +11,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "@typesafe-ai/sdk": "^0.7.0"
+    "@typesafe-ai/sdk": "^0.7.0",
+    "envalid": "^9.0.0"
   }
 }
