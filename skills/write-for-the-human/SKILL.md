@@ -69,9 +69,11 @@ e.g.
      git rm --cached meta-repo.local.yaml
      ```
 2. Purge it from history
-   - Rewrites every commit, so it needs a fresh clone.
+   - Rewrites every commit
+    - So: it needs a fresh clone.
 3. Rotate the secrets it contained
-   - Safe to do last, once the file is gone from the tip.
+   - Safe to do last, 
+    - Once the file is gone from the tip.
 ````
 
 The reply is then "2 and 3, skip 1", rather than a paragraph describing which parts to do.
