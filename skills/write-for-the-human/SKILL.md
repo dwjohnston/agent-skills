@@ -41,23 +41,17 @@ Fails on any linted file that matches no entry's `allowedFiles`.
 
 **Why:** Specifics invite the reader to check them, and make the sentence go stale when they change.
 
-### Use lists
 
-Prefer structured lists rather than listing items in a single sentence. 
+### Use bullet points extensively
 
-
-👎 Bad
-```
-Two live threads, one parked, and one newly captured project idea. Meta-repo: five items left, and the first of them — the versioned spin-up — is the December presentation. Three closed on 2026-10-26: the commit-as-you-go rule, agent-skills, dotfiles.
-```
-
-👍 Good
-```
-Three things: 
-
-- Meta repo 
-- 
-```
+Instead of:
+> Migration 0042 adds orders.region as NOT NULL, backfilled from customers.region, which locks writes for about 20 min on prod; drop legacy_region a week later.
+Write:
+- `0042_add_orders_region`
+  - Adds `orders.region` as NOT NULL.
+  - Backfilled from `customers.region`.
+  - Locks writes for about 20 minutes on prod.
+- Then: drop `legacy_region` a week later.
 
 #### Use numbered lists
 
