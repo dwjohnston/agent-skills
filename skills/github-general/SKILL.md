@@ -15,7 +15,9 @@ Humans: add your notes here
 
 -->
 
-- Acknowledge the project owner's comments with 👀 emoji
+## Acknowledge the project owner's comments with 👀 emoji
+
+👆
 
 ## Always include AI content headers.
 
