@@ -21,22 +21,20 @@ Humans: add your notes here
 
 ## Always include AI content headers.
 
-`````!!AGENT 
+Generate the header with [scripts/ai-header.ts](scripts/ai-header.ts) and put it at the top of everything you post to GitHub: comments, issues, PR descriptions.
 
-Add a script that the agent can use to generate AI headers. 
-
-It should have two modes 
-
-
-The script gives a header like this 
-
-```
-🤖 <harness>/<model>/<session> 
+```bash
+bun skills/github-general/scripts/ai-header.ts --harness "<harness>" --model "<model>"
 ```
 
-For a cloud session it should be a link. 
+It has two modes, picked automatically from `CLAUDE_CODE_REMOTE`. Use `--mode` to force one.
 
-`````
+| Mode | Output |
+|---|---|
+| `local` | `🤖 <harness>/<model>/<session id>` |
+| `cloud` | `🤖 <harness>/<model>/[<session id>](https://claude.ai/code/<session id>)` |
+
+The session ID comes from the environment. Pass `--session` to override it.
 
 
 
