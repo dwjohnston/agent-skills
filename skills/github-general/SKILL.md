@@ -78,7 +78,7 @@ eg.
 ```
 
 
-##!!AGENT  is instructions for you 
+## !!AGENT  is instructions for you 
 
 If you are live monitoring codebases - text content in markdown files `!!AGENT` is instructions for you. 
 
