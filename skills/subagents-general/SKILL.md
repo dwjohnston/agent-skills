@@ -15,16 +15,13 @@ Humans: add your notes here
 
 -->
 
-# Subagents general
+# 'spawn a subagent' vs 'spawn a subagent process' 
 
-<!-- TODO: add conventions -->
+'Spawn a subagent' means to spawn a subagent via your regular subagent spawning mechanism. 
 
-✅ **Do this**
+'Spawn a subagent process' means to spawn a new session with headlessly. 
 
-- TODO
+Eg. if you are claude, you would run `claude -p "the prompt here"` (!!AGENT - update the example). 
 
-❌ **Don't do that**
+**Rationale:** Regular subagents are still tracked as the same session as the main session. Headlessly spawned subagents will get new session ids, which is sometimes what we are looking for. 
 
-- TODO
-
-**Rationale:** TODO
