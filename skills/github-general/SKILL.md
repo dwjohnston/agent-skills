@@ -19,6 +19,10 @@ Humans: add your notes here
 
 👆
 
+When the task is done convert the emoji to 🚀. 
+
+If you require human input add the ☹️ emoji. 
+
 ## Always include AI content headers.
 
 Generate the header with [scripts/ai-header.ts](scripts/ai-header.ts) and put it at the top of everything you post to GitHub: comments, issues, PR descriptions.
