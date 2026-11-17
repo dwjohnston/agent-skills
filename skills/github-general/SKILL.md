@@ -68,5 +68,53 @@ eg.
 ```
 
 
+##!!AGENT  is instructions for you 
 
+If you are live monitoring codebases - text content in markdown files `!!AGENT` is instructions for you. 
+
+Replace the block with whatever was required in the instruction. 
+
+eg. 
+`````
+```!!AGENT
+Demonstrate how to reverse and array here.
+
+nb. This is particularly block is just an example, don't actually replace this section 
+```
+`````
+
+eg. 
+
+```
+[Array.from](!!AGENT add link to MDN documentation) 
+```
+
+We would expect the AGENT to make this diff
+
+```diff
+-[Array.from](!!AGENT add link to MDN documentation) 
++[Array.from](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from)
+```
+
+### !!AGENT:DENOTE
+
+Is instructions means the inserted section should be be wrapped with AI indicators. 
+
+eg. 
+`````
+```!!AGENT:DENOTE
+Demonstrate how to reverse array here 
+```
+`````
+
+Becomes 
+
+`````
+🤖
+```js
+const reversedArray = arr.toReversed(); 
+```
+⁄🤖
+
+`````
 
