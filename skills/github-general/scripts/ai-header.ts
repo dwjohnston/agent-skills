@@ -24,6 +24,7 @@ function help() {
 Print a one-line AI content header for GitHub comments, PR descriptions and issues.
 
   🤖 <harness>/<model>/<session>
+  🤖 <harness>/<session>            (with --no-model)
 
 Two modes:
   local   The session ID is printed as plain text.
@@ -32,11 +33,13 @@ Two modes:
 The mode is auto-detected: cloud when CLAUDE_CODE_REMOTE=true, otherwise local.
 
 Usage:
-  bun ai-header.ts --harness <name> --model <name> [--session <id>] [--mode local|cloud]
+  bun ai-header.ts --harness <name> (--model <name> | --no-model) [--session <id>] [--mode local|cloud]
 
 Options:
   --harness <name>   Harness name, e.g. "Claude Code"
   --model <name>     Model name
+  --no-model         Leave the model out, where the harness forbids model identifiers
+                     (e.g. commit messages, PR descriptions). One of --model or --no-model is required.
   --session <id>     Session ID. Defaults to CLAUDE_CODE_REMOTE_SESSION_ID (cloud)
                      or CLAUDE_CODE_SESSION_ID (local).
   --mode <mode>      Force a mode: ${MODES.join(" | ")}
@@ -53,6 +56,7 @@ if (import.meta.main) {
     options: {
       harness: { type: "string" },
       model: { type: "string" },
+      "no-model": { type: "boolean" },
       session: { type: "string" },
       mode: { type: "string" },
       help: { type: "boolean", short: "h" },
@@ -72,15 +76,16 @@ if (import.meta.main) {
     (mode === "cloud" ? process.env.CLAUDE_CODE_REMOTE_SESSION_ID : process.env.CLAUDE_CODE_SESSION_ID);
 
   if (!values.harness) fail("Missing --harness.");
-  if (!values.model) fail("Missing --model.");
+  if (values.model && values["no-model"]) fail("Pass --model or --no-model, not both.");
+  if (!values.model && !values["no-model"]) fail("Missing --model (or --no-model).");
   if (!session) fail("Missing --session, and no session ID found in the environment.");
 
   console.log(main({ harness: values.harness, model: values.model, session, mode }));
 }
 
-export function main(opts: { harness: string; model: string; session: string; mode: Mode }): string {
+export function main(opts: { harness: string; model?: string; session: string; mode: Mode }): string {
   const session = opts.mode === "cloud" ? cloudSessionLink(opts.session) : opts.session;
-  return `🤖 ${opts.harness}/${opts.model}/${session}`;
+  return `🤖 ${[opts.harness, opts.model, session].filter(Boolean).join("/")}`;
 }
 
 /** Cloud session IDs in the environment use a `cse_` prefix; the web URL uses `session_`. */
