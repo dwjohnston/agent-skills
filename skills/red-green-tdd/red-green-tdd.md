@@ -43,11 +43,33 @@ If the 🟢 commit for one test makes a later test pass before you've written it
 
 ## Workflow by task type
 
-**New functionality / bug fix:** break the work into individual behaviours. For each behaviour: 🔴 one test → 🟢 minimal implementation → optional ♻️. Put preparatory refactors ("make the change easy") *before* the 🔴, as their own ♻️ commit.
+### New functionality
 
-**Refactor / chore:** ♻️ commits only. Every commit is green.
+Break the work into individual behaviours. 
 
-**Breaking change (or a bug fix where many tests encoded the bug):** use expand/contract so the flip only breaks one test:
+For each behaviour: 🔴 one test → 🟢 minimal implementation → optional ♻️. 
+
+Put preparatory refactors ("make the change easy") *before* the 🔴, as their own ♻️ commit.
+
+### Bug fixes 
+
+Add a single 🔴 test that demonstrates the buggy behaviour, then 🟢 to fix it. 
+
+If the bug is already encoded into many tests, then use 🔴🔴 to change the tests, then fix behaviour. 
+
+### Refactor / chore
+
+♻️ commits only. Every commit is green.
+
+#### Tests refactor
+
+A change may just be updating descriptions or other not behavioural changes to the tests. Use ♻️
+
+
+### Breaking change
+
+Use expand/contract so the flip only breaks one test:
+
 1. Expand: add the new behaviour behind an option, using normal 🔴/🟢 cycles.
 2. Migrate: ♻️ change existing tests to select the old behaviour explicitly.
 3. Flip: 🔴 change the one test that asserts the default → 🟢 change the default.
