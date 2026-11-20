@@ -84,10 +84,6 @@ General diagram style lives in markdown-general. These rules are for diagrams Gi
 
 ### Flow top to bottom
 
-✅ **Do** use `flowchart TD`.
-
-❌ **Don't** use `LR`.
-
 `````markdown
 ```mermaid
 flowchart TD
