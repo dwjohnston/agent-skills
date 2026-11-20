@@ -1,0 +1,21 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "dwjohnston-agent-skills",
+  "description": "Agent skills dwjohnston uses across projects.",
+  "owner": {
+    "name": "dwjohnston",
+    "url": "https://github.com/dwjohnston"
+  },
+  "plugins": [
+    {
+      "name": "dwjohnston-skills",
+      "source": "./",
+      "description": "All of dwjohnston's agent skills: Markdown style, GitHub conventions, TDD, subagents, scripts and more.",
+      "author": { "name": "dwjohnston" },
+      "homepage": "https://github.com/dwjohnston/agent-skills",
+      "repository": "https://github.com/dwjohnston/agent-skills",
+      "license": "MIT",
+      "keywords": ["skills", "markdown", "github", "tdd"]
+    }
+  ]
+}
