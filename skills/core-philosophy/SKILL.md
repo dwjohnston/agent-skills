@@ -40,3 +40,30 @@ description: For setting up new projects, or marking architectural decisions abo
   - Use a linter to ban these functions, except where they are injected. 
 
 - Prefer pure DI by default. Adopt a DI framework when pure DI becomes painful.
+
+## Database roles/credentials
+
+Applications should only need the access the need for _routine_ behaviour. Things like modifying columns etc, should be considered _exceptional_ behaviour that requires a different role. 
+
+Applications that do routine reading/writing of data should assume that the tables and their columns already exist. 
+
+For example, say we have an application that is recording CI metrics in a database, there will be two roles: 
+
+- Metrics writer - INSERT 
+- Metrics reader - SELECT 
+
+When this application is initialised, or during a major change migration new tables, new columns might need to be added. 
+
+In this case a a intialised/migration script should be run with a seperate admin role.  
+
+As such 'create table if it doesn't exist' functionality should not be included in regular application behaviour. 
+
+**Rationale** Limit the blast radius that an application can make if a mistake or malicious activity occurs. 
+
+## Processses
+
+Avoid spawning new processes from an application, unless you have a really good reason for it. 
+
+This include `Bun.$` and `Bun.spawnSync`. 
+
+**Rationale** Spawning new processes is _slow_. 
