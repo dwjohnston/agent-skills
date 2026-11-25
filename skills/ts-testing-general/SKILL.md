@@ -17,4 +17,8 @@ Humans: add your notes here
 
 # TypeScript testing: general conventions
 
-<!-- Boilerplate. Add conventions below, each as a heading, a 👍 Good / 👎 Bad example and a **Rationale:** line. -->
+## Use functions and classes as description 
+
+```
+
+```
