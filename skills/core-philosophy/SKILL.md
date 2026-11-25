@@ -60,10 +60,4 @@ As such 'create table if it doesn't exist' functionality should not be included 
 
 **Rationale** Limit the blast radius that an application can make if a mistake or malicious activity occurs. 
 
-## Processses
 
-Avoid spawning new processes from an application, unless you have a really good reason for it. 
-
-This include `Bun.$` and `Bun.spawnSync`. 
-
-**Rationale** Spawning new processes is _slow_. 
