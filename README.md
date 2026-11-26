@@ -43,3 +43,4 @@ npx skills add dwjohnston/agent-skills@markdown-general
 | [github-general](skills/github-general/SKILL.md) | General conventions for working with GitHub. Boilerplate. |
 | [subagents-general](skills/subagents-general/SKILL.md) | Conventions for spawning and briefing subagents. Boilerplate. |
 | [write-for-the-human](skills/write-for-the-human/SKILL.md) | List-led formatting for text humans read: chat output, AGENTS.md, SKILL.md. |
+| [ts-testing-general](skills/ts-testing-general/SKILL.md) | General conventions for TypeScript tests. Boilerplate. |
