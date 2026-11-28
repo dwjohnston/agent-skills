@@ -3,12 +3,18 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:fly": "bun test ./.thunderjar/fly-client",
+    "fly": "bun ./.thunderjar/fly-client/index.ts",
+    "fly:up": "bun ./.thunderjar/fly-client/index.ts up",
+    "fly:stop": "bun ./.thunderjar/fly-client/index.ts stop",
+    "fly:status": "bun ./.thunderjar/fly-client/index.ts status"
   },
   "devDependencies": {
     "@types/bun": "^1.4.4",
     "commander": "^15.0.0",
     "envalid": "^9.0.0",
+    "thunderjar": "0.6.0-preview-173007c",
     "typescript": "^7.0.2"
   }
 }
